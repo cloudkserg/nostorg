@@ -26,8 +26,9 @@ class OrderUpdateListener
      */
     public function handle(OrderUpdate $event)
     {
+
         $item = $event->order;
-        if (!empty($item->email) and $item->isChanged()) {
+        if (!empty($item->email) and $this->isChanged($item)) {
           \Mail::to($item->email)
               ->send(new \App\Mail\OrderUpdateMail($item));
         }

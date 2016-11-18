@@ -31,7 +31,8 @@ class OrderUpdateMail extends Mailable
      */
     public function build()
     {
-        return $this->view('view.name', ['item' => $this->item])
-          ->subject('Изменения по заказу . ' . $this->item->id . ' на ' . config('app.name'));
+        return $this
+          ->subject('Изменения по заказу . ' . $this->item->id . ' на ' . config('app.name'))
+          ->view('email.order_update', ['item' => $this->item]);
     }
 }

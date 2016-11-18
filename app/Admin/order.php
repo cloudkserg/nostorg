@@ -55,8 +55,8 @@ AdminSection::registerModel(Order::class, function (ModelConfiguration $model) {
     });
 
 
-    $model->updated(function(ModelConfiguration $model, Order $order) {
-      event(new \App\Events\OrderUpdate(order));
+    $model->updating(function(ModelConfiguration $model, Order $order) {
+      event(new \App\Events\OrderUpdate($order));
     });
 })
 ->addMenuPage(Order::class, 0)
