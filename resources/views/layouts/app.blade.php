@@ -12,7 +12,9 @@
 
     <!-- Styles -->
     <link href="/css/app.css" rel="stylesheet">
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/bootstrap.min.css.1" rel="stylesheet">
+    <link href="/css/AdminLTE.min.css" rel="stylesheet">
+    <link href="/css/font-awesome.min.css" rel="stylesheet">
     <link href="/css/dataTables.bootstrap.min.css" rel="stylesheet">
 
 
@@ -55,9 +57,11 @@
 
                     <!-- Right Side Of Navbar -->
                     <ul class="nav navbar-nav navbar-right">
+                        <li><a href="{{ url('/order/create') }}">Создать заказ</a></li>
                         <!-- Authentication Links -->
                         @if (Auth::guest())
                             <!-- <li><a href="{{ url('/login') }}">Вход</a></li> -->
+                            <!-- <li><a href="{{ url('/register') }}">Регистрация</a></li> -->
                             <!-- <li><a href="{{ url('/register') }}">Регистрация</a></li> -->
                         @else
                             <li class="dropdown">
@@ -84,6 +88,10 @@
                 </div>
             </div>
         </nav>
+
+        @if (Session::has('message'))
+            <div class="alert alert-info">{{ Session::get('message') }}</div>
+        @endif
 
         @yield('content')
     </div>

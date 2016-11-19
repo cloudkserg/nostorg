@@ -28,3 +28,6 @@ $this->post('password/reset', 'Auth\ResetPasswordController@reset');
 
 Route::get('/', 'SiteController@index');
 Route::get('/orders', 'OrderController@index');
+
+Route::get('/order/create', 'OrderController@create');
+Route::post('/order/store', 'OrderController@store');
