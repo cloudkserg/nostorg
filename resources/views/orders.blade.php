@@ -11,7 +11,7 @@
                   <th>Статус</th>
                   <th>Дата выдачи</th>
                   <th>Тип акции</th>
-                  <th>Заказ с</th>
+                  <th>В работе</th>
                   <th>Телефон</th>
                   <th>Адрес</th>
                   <th>Цена</th>
@@ -41,7 +41,7 @@
             <td>{{ !empty($order->status) ? (new App\Type\OrderStatus())->getTitle($order->status): '-'}}</td>
             <td>{{ !empty($order->date_out) ? $order->date_out->format('d.m.Y') : '-'}}</td>
             <td>{{ isset($order->action) ? $order->action->name : '-'}}</td>
-            <td>{{ !empty($order->order_start) ? $order->order_start->format('d.m.Y') : '-'}}</td>
+            <td>{{ $order->in_work ? 'В работе' : 'Ожидает'}}</td>
             <td>{{ $order->phone }}</td>
             <td>{{ $order->price }}</td>
           </tr>
@@ -53,7 +53,11 @@
 
 <script>
   jQuery(document).ready(function() {
-    jQuery('#example').DataTable();
+    jQuery('#example').DataTable({
+            "language": {
+                "url": "js/Russian.json"
+            }
+    });
   });
 </script>
 @endsection

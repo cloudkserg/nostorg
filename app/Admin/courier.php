@@ -18,5 +18,5 @@ AdminSection::registerModel(Courier::class, function (ModelConfiguration $model)
         ]);
     });
 })
-->addMenuPage(Courier::class, 0)
+->addMenuPage(Courier::class, 4)
 ->setIcon('fa fa-bank');

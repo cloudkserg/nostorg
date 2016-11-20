@@ -31,11 +31,16 @@ return [
     //     'url'   => route('admin.dashboard'),
     // ],
     //
-    // [
-    //     'title' => 'Information',
-    //     'icon'  => 'fa fa-exclamation-circle',
-    //     'url'   => route('admin.information'),
-    // ],
+    [
+        'title' => 'Информация',
+        'icon'  => 'fa fa-exclamation-circle',
+        'url'   => '/admin/info/edit'
+    ],
+        [
+        'title' => 'Закупки',
+        'icon'  => 'fa fa-exclamation-circle',
+        'url'   => '/admin/purchase/edit'
+    ],
 
     // Examples
     // [

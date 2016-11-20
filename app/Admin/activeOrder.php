@@ -1,15 +1,14 @@
 <?php
-use App\Order;
+use App\ActiveOrder;
 use SleepingOwl\Admin\Model\ModelConfiguration;
-
-AdminSection::registerModel(Order::class, function (ModelConfiguration $model) {
-    $model->setTitle('Архивные заказы');
+AdminSection::registerModel(ActiveOrder::class, function (ModelConfiguration $model) {
+    $model->setTitle('Заказы');
     // Display
     $model->onDisplay(function () {
         return AdminDisplay::datatables()
             ->setApply(function ($query) {
                 $query->orderBy('id', 'desc');
-                $query->where('status', \App\Type\OrderStatus::ARCHIVE);
+                $query->where('status', '!=', \App\Type\OrderStatus::ARCHIVE);
             })
             ->setHtmlAttribute('class', 'table-primary')
             ->setColumns([
@@ -18,15 +17,17 @@ AdminSection::registerModel(Order::class, function (ModelConfiguration $model) {
 
                 AdminColumn::link('name')->setLabel('Имя'),
                 AdminColumn::datetime('date', 'Дата заказа')->setFormat('d.m.Y')->setWidth('150px'),
-                AdminColumn::custom('Статус', function (Order $row) {
+                AdminColumn::custom('Статус', function (ActiveOrder $row) {
                   return !empty($row->status) ? (new \App\Type\OrderStatus())->getTitle($row->status) : '-';
                 }),
-                AdminColumn::checkbox('in_work')->setLabel('В работе'),
-                AdminColumn::custom('Курьер', function (Order $row) {
+                AdminColumn::custom('В работе', function (ActiveOrder $row) {
+                    return $row->in_work ? 'Да' : 'Нет';
+                }),
+                AdminColumn::custom('Курьер', function (ActiveOrder $row) {
                   return isset($row->courier) ? $row->courier->name : '-';
                 }),
                 AdminColumn::text('address', 'Адрес'),
-                AdminColumn::custom('Тип акции', function (Order $row) {
+                AdminColumn::custom('Тип акции', function (ActiveOrder $row) {
                   return isset($row->action) ? $row->action->name : '-';
                 }),
                 AdminColumn::text('profit', 'Прибыль'),
@@ -60,11 +61,11 @@ AdminSection::registerModel(Order::class, function (ModelConfiguration $model) {
     });
 
 
-    $model->updating(function(ModelConfiguration $model, Order $order) {
+    $model->updating(function(ModelConfiguration $model, ActiveOrder $order) {
       event(new \App\Events\OrderUpdate($order));
     });
-    $model->setAlias('admin/archiveOrders');
-})
 
-->addMenuPage(Order::class, 1)
+    $model->setAlias('admin/orders');
+})
+->addMenuPage(ActiveOrder::class, 0)
 ->setIcon('fa fa-bank');

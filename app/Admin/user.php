@@ -21,5 +21,5 @@ AdminSection::registerModel(User::class, function (ModelConfiguration $model) {
         ]);
     });
 })
-->addMenuPage(User::class, 0)
+->addMenuPage(User::class, 5)
 ->setIcon('fa fa-bank');

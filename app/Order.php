@@ -30,11 +30,18 @@ class Order extends Model
       return $this->belongsTo(Action::class);
     }
 
-    public function isChanged()
+    protected static function boot()
     {
+        static::creating(function ($order) {
+            if (empty($order->date)) {
+                $order->date = \Carbon\Carbon::create();
+            }
+            if (empty($order->status)) {
+                $order->status = \App\Type\OrderStatus::ACTIVE;
+            }
 
+            return true;
+        });
     }
-
-
 
 }

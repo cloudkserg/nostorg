@@ -29,5 +29,16 @@ $this->post('password/reset', 'Auth\ResetPasswordController@reset');
 Route::get('/', 'SiteController@index');
 Route::get('/orders', 'OrderController@index');
 
+
+
 Route::get('/order/create', 'OrderController@create');
 Route::post('/order/store', 'OrderController@store');
+
+Route::group(['middleware' => 'auth'], function () {
+	Route::get('/admin/info/edit', 'Admin\InfoController@edit');
+	Route::post('/admin/info/store', 'Admin\InfoController@store');
+
+	Route::get('/admin/purchase/edit', 'Admin\PurchaseController@edit');
+	Route::post('/admin/purchase/store', 'Admin\PurchaseController@store');
+});
+
